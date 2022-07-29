@@ -20,10 +20,8 @@ def query_stockcode(stockcode):
 
 
 def create_db():
-    # uncomment this when using the code as production
     d_excel = io.BytesIO()
 
-    # excel = "C:\\Users\\chunh\\OneDrive\\OD - Documents\\Master Part List - CITEC.xlsx"
     server_file = r"\\192.168.0.118\Engineering\MASTER PART LIST\Master Part List - CITEC.xlsx"
 
     with open(server_file, 'rb') as f:
@@ -31,9 +29,10 @@ def create_db():
         excelf.load_key('CITEC')
         excelf.decrypt(d_excel)
 
-    # change the Excel variable to d_excel if using locked file
     data_xls = pd.read_excel(d_excel, 'Sheet1', dtype=str)
     data_xls.to_csv('MasterPartList.csv', encoding='utf-8', header=True)
 
-    # test: print all rows in terminal after import
-    pass
+def create_offline_db():
+    excel = "C:\\Users\\chunh\\OneDrive\\OD - Documents\\Master Part List - CITEC.xlsx"
+    data_xls = pd.read_excel(excel, 'MasterPartList', dtype=str)
+    data_xls.to_csv('MasterPartList.csv', encoding='utf-8', header=True)
